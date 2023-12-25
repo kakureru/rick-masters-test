@@ -10,14 +10,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.rickmasters.app.ui.theme.RickmasterstestTheme
+import com.rickmasters.app.ui.RootNavHost
+import com.rickmasters.common.ui.theme.RickmasterstestTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             RickmasterstestTheme {
-
+                RootNavHost()
             }
         }
     }

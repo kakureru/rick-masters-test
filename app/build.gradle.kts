@@ -49,6 +49,12 @@ android {
 }
 
 dependencies {
+    implementation(project(":common:ui"))
+    implementation(project(":feature:cameras"))
+    implementation(project(":feature:doors"))
+    implementation(project(":component:cameras"))
+    implementation(project(":component:doors"))
+
     implementation(Dependencies.coreKtx)
     implementation(Dependencies.lifecycleRuntimeKtx)
     compose()

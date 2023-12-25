@@ -1,3 +1,4 @@
+import plugin.ComposeGradlePlugin
 import plugin.ModuleGradlePlugin
 
 plugins {
@@ -6,6 +7,7 @@ plugins {
 }
 
 apply<ModuleGradlePlugin>()
+apply<ComposeGradlePlugin>()
 
 android {
     namespace = "com.rickmasters.doors"
