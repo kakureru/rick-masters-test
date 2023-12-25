@@ -21,4 +21,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "rick-masters-test"
 include(":app")
- 
+include(":feature:cameras")
+include(":feature:doors")
+include(":component:cameras")
+include(":component:doors")
