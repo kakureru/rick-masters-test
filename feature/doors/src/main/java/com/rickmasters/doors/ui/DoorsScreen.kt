@@ -1,9 +1,10 @@
-package com.rickmasters.cameras.ui
+package com.rickmasters.doors.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -25,44 +26,47 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.rickmasters.common.ui.FullscreenLoader
 import com.rickmasters.common.ui.PlayOverlay
+import com.rickmasters.common.ui.R
 import org.koin.androidx.compose.koinViewModel
-import com.rickmasters.common.ui.R as CommonRes
 
 @Composable
-internal fun CamerasScreen(
+internal fun DoorsScreen(
     modifier: Modifier = Modifier,
-    viewModel: CamerasViewModel = koinViewModel()
+    viewModel: DoorsViewModel = koinViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
 
-    CamerasScreenLayout(
+    DoorsScreenLayout(
         state = state,
+        onFavouriteClick = viewModel::onFavouriteClick,
+        onLockClick = viewModel::onLockClick,
         modifier = modifier,
-        onFavouriteClick = viewModel::onFavouriteClick
     )
 }
 
 @Composable
-internal fun CamerasScreenLayout(
-    state: CamerasScreenState,
-    onFavouriteClick: (camId: String) -> Unit,
+internal fun DoorsScreenLayout(
+    state: DoorsScreenState,
+    onFavouriteClick: (doorId: String) -> Unit,
+    onLockClick: (doorId: String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     when (state) {
-        CamerasScreenState.Loading -> FullscreenLoader()
+        DoorsScreenState.Loading -> FullscreenLoader()
 
-        is CamerasScreenState.Content -> {
+        is DoorsScreenState.Content -> {
             LazyColumn(
                 modifier = modifier,
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 contentPadding = PaddingValues(horizontal = 20.dp, vertical = 16.dp)
             ) {
-                items(items = state.elements, key = { item -> item.id }) {
+                items(items = state.items, key = { item -> item.id }) {
                     when (it) {
                         is ListElement.Header -> Header(text = it.text)
-                        is ListElement.Camera -> CameraItem(
+                        is ListElement.Door -> DoorItem(
                             model = it,
-                            onFavouriteClick = { onFavouriteClick(it.id) }
+                            onFavouriteClick = { onFavouriteClick(it.id) },
+                            onLockClick = { onLockClick(it.id) }
                         )
                     }
                 }
@@ -84,9 +88,10 @@ internal fun Header(
 }
 
 @Composable
-internal fun CameraItem(
+internal fun DoorItem(
+    model: ListElement.Door,
     onFavouriteClick: () -> Unit,
-    model: ListElement.Camera,
+    onLockClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Surface(
@@ -96,10 +101,7 @@ internal fun CameraItem(
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
             Box {
-                CameraPreview(
-                    rec = model.rec,
-                    imageUrl = model.previewUrl
-                )
+                CameraPreview(imageUrl = model.snapshotUrl)
 
                 if (model.favourite) {
                     IconButton(
@@ -107,30 +109,41 @@ internal fun CameraItem(
                         modifier = Modifier.align(Alignment.TopEnd)
                     ) {
                         Icon(
-                            imageVector = ImageVector.vectorResource(CommonRes.drawable.ic_star),
+                            imageVector = ImageVector.vectorResource(R.drawable.ic_star),
                             contentDescription = null,
                         )
                     }
                 }
             }
 
-            Text(
-                text = model.name,
+            Row(
                 modifier = Modifier.padding(
                     start = 16.dp,
                     top = 22.dp,
                     bottom = 20.dp,
                     end = 16.dp
                 ),
-                style = MaterialTheme.typography.titleSmall
-            )
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Text(
+                    text = model.name,
+                    style = MaterialTheme.typography.titleSmall
+                )
+                IconButton(onClick = onLockClick) {
+                    Icon(
+                        imageVector = ImageVector.vectorResource(
+                            if (model.locked) R.drawable.ic_lock else R.drawable.ic_lock_off
+                        ),
+                        contentDescription = null
+                    )
+                }
+            }
         }
     }
 }
 
 @Composable
 internal fun CameraPreview(
-    rec: Boolean,
     imageUrl: String,
     modifier: Modifier = Modifier,
 ) {
@@ -141,16 +154,6 @@ internal fun CameraPreview(
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxWidth()
         )
-
-        if (rec) {
-            Icon(
-                imageVector = ImageVector.vectorResource(CommonRes.drawable.ic_rec),
-                contentDescription = null,
-                modifier = Modifier
-                    .align(Alignment.TopStart)
-                    .padding(8.dp)
-            )
-        }
 
         PlayOverlay()
     }

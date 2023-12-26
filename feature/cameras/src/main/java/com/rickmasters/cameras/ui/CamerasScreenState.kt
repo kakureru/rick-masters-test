@@ -17,12 +17,10 @@ internal sealed interface ListElement {
     }
 
     data class Camera(
-        val camId: Int,
+        override val id: String,
         val name: String,
         val favourite: Boolean,
         val previewUrl: String,
         val rec: Boolean,
-    ) : ListElement {
-        override val id = camId.toString()
-    }
+    ) : ListElement
 }

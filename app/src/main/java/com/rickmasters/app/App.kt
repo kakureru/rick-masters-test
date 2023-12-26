@@ -2,6 +2,7 @@ package com.rickmasters.app
 
 import android.app.Application
 import com.rickmasters.cameras.di.featureCamerasModule
+import com.rickmasters.doors.di.featureDoorsModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -16,6 +17,7 @@ class App : Application() {
             androidContext(this@App)
             modules(
                 featureCamerasModule,
+                featureDoorsModule,
             )
         }
     }

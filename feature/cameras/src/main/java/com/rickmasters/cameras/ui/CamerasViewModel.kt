@@ -12,7 +12,7 @@ internal class CamerasViewModel(
     private val _uiState = MutableStateFlow(CamerasScreenState.Content())
     val uiState: StateFlow<CamerasScreenState> = _uiState.asStateFlow()
 
-    fun onFavouriteClick(camId: Int) {
+    fun onFavouriteClick(camId: String) {
 
     }
 }
