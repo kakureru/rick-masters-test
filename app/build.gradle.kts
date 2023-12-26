@@ -54,6 +54,7 @@ dependencies {
     implementation(project(":feature:doors"))
     implementation(project(":component:cameras"))
     implementation(project(":component:doors"))
+    implementation(project(":network"))
 
     implementation(Dependencies.coreKtx)
     implementation(Dependencies.lifecycleRuntimeKtx)

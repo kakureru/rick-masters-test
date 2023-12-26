@@ -7,7 +7,7 @@ import org.koin.dsl.module
 val featureDoorsModule = module {
     viewModel {
         DoorsViewModel(
-
+            doorsRepository = get()
         )
     }
 }

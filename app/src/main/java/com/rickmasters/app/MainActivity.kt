@@ -12,13 +12,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.rickmasters.app.ui.RootNavHost
 import com.rickmasters.common.ui.theme.RickmasterstestTheme
+import org.koin.compose.KoinContext
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            RickmasterstestTheme {
-                RootNavHost()
+            KoinContext {
+                RickmasterstestTheme {
+                    RootNavHost()
+                }
             }
         }
     }

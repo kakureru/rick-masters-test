@@ -15,6 +15,8 @@ android {
 
 dependencies {
     implementation(project(":common:ui"))
+    implementation(project(":common:utils"))
+    implementation(project(":component:doors"))
 
     implementation(Dependencies.coreKtx)
     koin()

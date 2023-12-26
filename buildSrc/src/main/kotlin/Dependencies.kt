@@ -7,7 +7,6 @@ object Dependencies {
     const val lifecycleRuntimeCompose = "androidx.lifecycle:lifecycle-runtime-compose:2.6.2"
     const val activityCompose = "androidx.activity:activity-compose:1.8.0"
     const val navigationCompose = "androidx.navigation:navigation-compose:2.7.5"
-    const val dataStore = "androidx.datastore:datastore-preferences:1.0.0"
 
     const val coil = "io.coil-kt:coil-compose:2.5.0"
 
@@ -29,6 +28,20 @@ object Dependencies {
     }
 
     const val kotlinxSerialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.1"
+
+    object Ktor {
+        const val core = "io.ktor:ktor-client-core:${Versions.ktor}"
+        const val android = "io.ktor:ktor-client-android:${Versions.ktor}"
+        const val serialization = "io.ktor:ktor-client-serialization:${Versions.ktor}"
+        const val logging = "io.ktor:ktor-client-logging:${Versions.ktor}"
+    }
+}
+
+fun DependencyHandler.ktor() {
+    implementation(Dependencies.Ktor.core)
+    implementation(Dependencies.Ktor.android)
+    implementation(Dependencies.Ktor.serialization)
+    implementation(Dependencies.Ktor.logging)
 }
 
 fun DependencyHandler.koin() {

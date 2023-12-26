@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.rickmasters.cameras.navigation.CamerasNavHost
+import com.rickmasters.doors.navigation.DoorsNavHost
 
 @Composable
 fun RootNavHost(
@@ -13,7 +14,7 @@ fun RootNavHost(
 ) {
     NavHost(navController = navController, startDestination = "1") {
         composable(route = "1") {
-            CamerasNavHost()
+            DoorsNavHost()
         }
     }
 }
