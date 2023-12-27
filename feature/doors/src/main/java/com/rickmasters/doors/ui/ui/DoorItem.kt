@@ -1,5 +1,6 @@
 package com.rickmasters.doors.ui.ui
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,36 +16,63 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.rickmasters.common.ui.R
+import com.rickmasters.common.ui.SwipeDirection
+import com.rickmasters.common.ui.SwipeToReveal
 import com.rickmasters.common.ui.theme.Yellow
 import com.rickmasters.doors.ui.model.ListElement
 
 @Composable
 internal fun DoorItem(
     model: ListElement.Door,
+    onEditClick: () -> Unit,
+    onFavouriteClick: () -> Unit,
     onLockClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Surface(
-        modifier = modifier,
-        shape = MaterialTheme.shapes.medium,
-        shadowElevation = 2.dp,
-    ) {
-        if (model.snapshotUrl != null) {
-            DoorItemWithPreview(
-                model = model,
-                onLockClick = onLockClick,
-            )
-        } else {
-            DoorItemNoPreview(
-                model = model,
-                onLockClick = onLockClick,
-            )
+    SwipeToReveal(
+        swipeDirection = SwipeDirection.LEFT,
+        underContent = {
+            Row {
+                IconButton(onClick = onEditClick) {
+                    Image(
+                        painter = painterResource(id = R.drawable.btn_edit),
+                        contentDescription = null
+                    )
+                }
+
+                IconButton(onClick = onFavouriteClick) {
+                    Image(
+                        painter = painterResource(id = R.drawable.btn_favourite),
+                        contentDescription = null
+                    )
+                }
+            }
+        },
+        aboveContent = {
+            Surface(
+                modifier = modifier,
+                shape = MaterialTheme.shapes.medium,
+                shadowElevation = 2.dp,
+            ) {
+                if (model.snapshotUrl != null) {
+                    DoorItemWithPreview(
+                        model = model,
+                        onLockClick = onLockClick,
+                    )
+                } else {
+                    DoorItemNoPreview(
+                        model = model,
+                        onLockClick = onLockClick,
+                    )
+                }
+            }
         }
-    }
+    )
 }
 
 @Composable
@@ -57,7 +85,11 @@ private fun DoorItemWithPreview(
             CameraPreview(imageUrl = model.snapshotUrl!!)
 
             if (model.favourite) {
-                FavouriteIcon(modifier = Modifier.align(Alignment.TopEnd).padding(8.dp))
+                FavouriteIcon(
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(8.dp)
+                )
             }
         }
 

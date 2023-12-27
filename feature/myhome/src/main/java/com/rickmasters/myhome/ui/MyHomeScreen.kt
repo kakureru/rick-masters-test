@@ -35,7 +35,7 @@ internal fun MyHomeScreen(
             MyHomeTab.Doors,
         )
     }
-    val pagerState = rememberPagerState { tabItems.size }
+    val pagerState = rememberPagerState(1) { tabItems.size }
 
     Scaffold(
         modifier = modifier,
@@ -71,13 +71,16 @@ internal fun MyHomeScreen(
                     )
                 }
             }
-
-            HorizontalPager(state = pagerState) { index ->
-                when (tabItems[index]) {
-                    MyHomeTab.Cameras -> CamerasNavHost()
-                    MyHomeTab.Doors -> DoorsNavHost()
-                }
+            when (tabItems[pagerState.currentPage]) {
+                MyHomeTab.Cameras -> CamerasNavHost()
+                MyHomeTab.Doors -> DoorsNavHost()
             }
+//            HorizontalPager(state = pagerState) { index ->
+//                when (tabItems[index]) {
+//                    MyHomeTab.Cameras -> CamerasNavHost()
+//                    MyHomeTab.Doors -> DoorsNavHost()
+//                }
+//            }
         }
     }
 }

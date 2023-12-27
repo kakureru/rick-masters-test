@@ -156,12 +156,12 @@ internal fun CameraPreview(
     modifier: Modifier = Modifier,
 ) {
     Box(modifier = modifier.heightIn(max = 207.dp)) {
-        AsyncImage(
-            model = imageUrl,
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize()
-        )
+//        AsyncImage(
+//            model = imageUrl,
+//            contentDescription = null,
+//            contentScale = ContentScale.Crop,
+//            modifier = Modifier.fillMaxSize()
+//        )
 
         if (rec) {
             Icon(

@@ -13,7 +13,9 @@ object Dependencies {
     object Compose {
         const val bom = "androidx.compose:compose-bom:2023.10.01"
         const val runtime = "androidx.compose.runtime:runtime"
-        const val material3 = "androidx.compose.material3:material3"
+        const val foundation = "androidx.compose.foundation:foundation:1.6.0-alpha04"
+        const val foundationLayout = "androidx.compose.foundation:foundation-layout"
+        const val material3 = "androidx.compose.material3:material3:1.2.0-alpha08"
         const val ui = "androidx.compose.ui:ui"
         const val uiGraphics = "androidx.compose.ui:ui-graphics"
         const val uiTooling = "androidx.compose.ui:ui-tooling"
@@ -56,6 +58,8 @@ fun DependencyHandler.compose() {
 
     implementation(platform(Dependencies.Compose.bom))
     implementation(Dependencies.Compose.runtime)
+    implementation(Dependencies.Compose.foundation)
+    implementation(Dependencies.Compose.foundationLayout)
     implementation(Dependencies.Compose.ui)
     implementation(Dependencies.Compose.uiGraphics)
     implementation(Dependencies.Compose.material3)

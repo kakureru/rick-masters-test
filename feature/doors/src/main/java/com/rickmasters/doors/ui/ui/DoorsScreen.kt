@@ -4,7 +4,6 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -15,10 +14,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
 import com.rickmasters.common.ui.FullscreenLoader
 import com.rickmasters.common.ui.PlayOverlay
 import com.rickmasters.doors.ui.DoorsViewModel
@@ -77,7 +74,9 @@ internal fun DoorsScreenLayout(
                         is ListElement.Header -> Header(text = it.text.asString())
                         is ListElement.Door -> DoorItem(
                             model = it,
-                            onLockClick = { onLockClick(it.id) }
+                            onLockClick = { onLockClick(it.id) },
+                            onEditClick = { },
+                            onFavouriteClick = { onFavouriteClick(it.id) }
                         )
                     }
                 }
@@ -104,12 +103,12 @@ internal fun CameraPreview(
     modifier: Modifier = Modifier,
 ) {
     Box(modifier = modifier.heightIn(max = 207.dp)) {
-        AsyncImage(
-            model = imageUrl,
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize()
-        )
+//        AsyncImage(
+//            model = imageUrl,
+//            contentDescription = null,
+//            contentScale = ContentScale.Crop,
+//            modifier = Modifier.fillMaxSize()
+//        )
 
         PlayOverlay()
     }
