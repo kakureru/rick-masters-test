@@ -1,6 +1,7 @@
 package com.rickmasters.cameras.ui
 
 import android.widget.Toast
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -28,11 +30,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.rickmasters.cameras.R
 import com.rickmasters.cameras.ui.model.CamerasEffect
 import com.rickmasters.cameras.ui.model.CamerasScreenState
 import com.rickmasters.cameras.ui.model.ListElement
 import com.rickmasters.common.ui.FullscreenLoader
 import com.rickmasters.common.ui.PlayOverlay
+import com.rickmasters.common.ui.SwipeDirection
+import com.rickmasters.common.ui.SwipeToReveal
 import com.rickmasters.common.ui.theme.Yellow
 import kotlinx.coroutines.flow.Flow
 import org.koin.androidx.compose.koinViewModel
@@ -113,40 +118,55 @@ internal fun CameraItem(
     model: ListElement.Camera,
     modifier: Modifier = Modifier,
 ) {
-    Surface(
-        modifier = modifier,
-        shape = MaterialTheme.shapes.medium,
-        shadowElevation = 2.dp,
-    ) {
-        Column(modifier = Modifier.fillMaxWidth()) {
-            Box {
-                CameraPreview(
-                    rec = model.rec,
-                    imageUrl = model.snapshotUrl
+    SwipeToReveal(
+        underContent = {
+            IconButton(onClick = onFavouriteClick) {
+                Image(
+                    imageVector = ImageVector.vectorResource(CommonRes.drawable.btn_favourite),
+                    contentDescription = null
                 )
+            }
+        },
+        aboveContent = {
+            Surface(
+                modifier = modifier,
+                shape = MaterialTheme.shapes.medium,
+                shadowElevation = 2.dp,
+            ) {
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    Box {
+                        CameraPreview(
+                            rec = model.rec,
+                            imageUrl = model.snapshotUrl
+                        )
 
-                if (model.favourite) {
-                    Icon(
-                        imageVector = ImageVector.vectorResource(CommonRes.drawable.ic_star),
-                        contentDescription = null,
-                        tint = Yellow,
-                        modifier = Modifier.align(Alignment.TopEnd).padding(8.dp)
+                        if (model.favourite) {
+                            Icon(
+                                imageVector = ImageVector.vectorResource(CommonRes.drawable.ic_star),
+                                contentDescription = null,
+                                tint = Yellow,
+                                modifier = Modifier
+                                    .align(Alignment.TopEnd)
+                                    .padding(8.dp)
+                            )
+                        }
+                    }
+
+                    Text(
+                        text = model.name,
+                        modifier = Modifier.padding(
+                            start = 16.dp,
+                            top = 22.dp,
+                            bottom = 20.dp,
+                            end = 16.dp
+                        ),
+                        style = MaterialTheme.typography.titleSmall
                     )
                 }
             }
-
-            Text(
-                text = model.name,
-                modifier = Modifier.padding(
-                    start = 16.dp,
-                    top = 22.dp,
-                    bottom = 20.dp,
-                    end = 16.dp
-                ),
-                style = MaterialTheme.typography.titleSmall
-            )
-        }
-    }
+        },
+        swipeDirection = SwipeDirection.LEFT
+    )
 }
 
 @Composable
@@ -156,12 +176,12 @@ internal fun CameraPreview(
     modifier: Modifier = Modifier,
 ) {
     Box(modifier = modifier.heightIn(max = 207.dp)) {
-//        AsyncImage(
-//            model = imageUrl,
-//            contentDescription = null,
-//            contentScale = ContentScale.Crop,
-//            modifier = Modifier.fillMaxSize()
-//        )
+        AsyncImage(
+            model = imageUrl,
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize()
+        )
 
         if (rec) {
             Icon(
