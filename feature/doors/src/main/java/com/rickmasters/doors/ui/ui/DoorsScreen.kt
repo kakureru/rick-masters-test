@@ -52,6 +52,17 @@ internal fun DoorsScreenLayout(
     onLockClick: (doorId: String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val context = LocalContext.current
+    LaunchedEffect(Unit) {
+        effect.collect {
+            when (it) {
+                is DoorsEffect.Error -> {
+                    Toast.makeText(context, it.msg.asString(context), Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+    }
+
     when (state) {
         DoorsScreenState.Loading -> FullscreenLoader()
 
@@ -69,17 +80,6 @@ internal fun DoorsScreenLayout(
                             onLockClick = { onLockClick(it.id) }
                         )
                     }
-                }
-            }
-        }
-    }
-
-    val context = LocalContext.current
-    LaunchedEffect(Unit) {
-        effect.collect {
-            when (it) {
-                is DoorsEffect.Error -> {
-                    Toast.makeText(context, it.msg.asString(context), Toast.LENGTH_LONG).show()
                 }
             }
         }

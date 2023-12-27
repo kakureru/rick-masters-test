@@ -6,6 +6,7 @@ import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.serializer.KotlinxSerializer
 import io.ktor.client.features.logging.LogLevel
 import io.ktor.client.features.logging.Logging
+import kotlinx.serialization.json.Json
 import org.koin.dsl.module
 
 val networkModule = module {
@@ -13,7 +14,11 @@ val networkModule = module {
         HttpClient(Android) {
             install(Logging) { level = LogLevel.ALL }
             install(JsonFeature) {
-                serializer = KotlinxSerializer()
+                serializer = KotlinxSerializer(
+                    json = Json {
+                        ignoreUnknownKeys = true
+                    }
+                )
             }
         }
     }

@@ -7,7 +7,7 @@ import org.koin.dsl.module
 val featureCamerasModule = module {
     viewModel {
         CamerasViewModel(
-
+            camerasRepository = get()
         )
     }
 }

@@ -14,7 +14,7 @@ fun RootNavHost(
 ) {
     NavHost(navController = navController, startDestination = "1") {
         composable(route = "1") {
-            DoorsNavHost()
+            CamerasNavHost()
         }
     }
 }
