@@ -31,7 +31,7 @@ internal fun DoorItem(
     Surface(
         modifier = modifier,
         shape = MaterialTheme.shapes.medium,
-        shadowElevation = 1.dp,
+        shadowElevation = 2.dp,
     ) {
         if (model.snapshotUrl != null) {
             DoorItemWithPreview(

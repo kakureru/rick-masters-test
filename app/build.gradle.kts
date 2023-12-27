@@ -52,6 +52,7 @@ dependencies {
     implementation(project(":common:ui"))
     implementation(project(":feature:cameras"))
     implementation(project(":feature:doors"))
+    implementation(project(":feature:myhome"))
     implementation(project(":component:cameras"))
     implementation(project(":component:doors"))
     implementation(project(":network"))

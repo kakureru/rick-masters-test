@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -22,6 +21,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -116,7 +116,7 @@ internal fun CameraItem(
     Surface(
         modifier = modifier,
         shape = MaterialTheme.shapes.medium,
-        shadowElevation = 5.dp,
+        shadowElevation = 2.dp,
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
             Box {
@@ -169,7 +169,8 @@ internal fun CameraPreview(
                 contentDescription = null,
                 modifier = Modifier
                     .align(Alignment.TopStart)
-                    .padding(8.dp)
+                    .padding(8.dp),
+                tint = Color.Red
             )
         }
 
