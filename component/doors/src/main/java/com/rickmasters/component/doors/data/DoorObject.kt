@@ -11,6 +11,7 @@ internal class DoorObject : RealmObject {
     var snapshotUrl: String? = null
     var favorites: Boolean = false
     var room: String? = null
+    var locked: Boolean = true
 }
 
 internal fun DoorObject.toDomain() = Door(
@@ -19,4 +20,5 @@ internal fun DoorObject.toDomain() = Door(
     snapshotUrl = snapshotUrl,
     favourite = favorites,
     room = room,
+    locked = locked,
 )

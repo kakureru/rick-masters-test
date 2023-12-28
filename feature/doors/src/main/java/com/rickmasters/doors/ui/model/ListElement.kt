@@ -46,5 +46,5 @@ internal fun Door.toUi() = ListElement.Door(
     name = name,
     favourite = favourite,
     snapshotUrl = snapshotUrl,
-    locked = true, // FIXME
+    locked = locked,
 )

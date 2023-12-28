@@ -69,7 +69,7 @@ internal class DoorsViewModel(
     }
 
     fun onLockClick(doorId: String) = viewModelScope.launch {
-        doorsRepository.toggleFavourite(doorId)
+        doorsRepository.toggleLock(doorId)
     }
 
     fun onRefresh() = viewModelScope.launch {

@@ -6,4 +6,5 @@ class Door(
     val snapshotUrl: String?,
     val favourite: Boolean,
     val room: String?,
+    val locked: Boolean,
 )

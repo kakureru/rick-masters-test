@@ -50,6 +50,11 @@ internal class DoorsRepositoryImpl(
     }
 
     override suspend fun toggleLock(doorId: String) {
-
+        realm.write {
+            val queriedDoor = query<DoorObject>("id == $0", doorId).first().find()
+            queriedDoor?.apply {
+                locked = !locked
+            }
+        }
     }
 }

@@ -7,6 +7,7 @@ import com.rickmasters.component.doors.domain.DoorsRepository
 import org.koin.dsl.module
 
 val componentDoorsModule = module {
+
     single<DoorsRepository> {
         DoorsRepositoryImpl(
             doorsApi = get(),
