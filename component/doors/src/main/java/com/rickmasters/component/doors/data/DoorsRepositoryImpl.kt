@@ -7,6 +7,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import com.rickmasters.common.utils.Result
 import com.rickmasters.common.utils.runRequestCatchingNonCancellation
+import com.rickmasters.component.doors.data.db.DoorObject
+import com.rickmasters.component.doors.data.db.toDomain
 import com.rickmasters.component.doors.data.network.model.toRealm
 import io.realm.kotlin.Realm
 import io.realm.kotlin.ext.query
@@ -43,6 +45,8 @@ internal class DoorsRepositoryImpl(
         }
         if (result is Result.Success) {
             realm.write {
+                val cache = query<DoorObject>().find()
+                delete(cache)
                 result.data.map { copyToRealm(it) }
             }
         }

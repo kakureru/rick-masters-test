@@ -1,6 +1,6 @@
 package com.rickmasters.component.doors.data.network.model
 
-import com.rickmasters.component.doors.data.DoorObject
+import com.rickmasters.component.doors.data.db.DoorObject
 import kotlinx.serialization.Serializable
 
 @Serializable

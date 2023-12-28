@@ -1,6 +1,6 @@
 package com.rickmasters.component.cameras.data.network.model
 
-import com.rickmasters.component.cameras.data.CameraObject
+import com.rickmasters.component.cameras.data.db.CameraObject
 import kotlinx.serialization.Serializable
 
 @Serializable

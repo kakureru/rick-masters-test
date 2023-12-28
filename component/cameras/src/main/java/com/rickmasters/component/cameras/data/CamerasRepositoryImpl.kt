@@ -2,17 +2,17 @@ package com.rickmasters.component.cameras.data
 
 import com.rickmasters.common.utils.Result
 import com.rickmasters.common.utils.runRequestCatchingNonCancellation
+import com.rickmasters.component.cameras.data.db.CameraObject
+import com.rickmasters.component.cameras.data.db.toDomain
 import com.rickmasters.component.cameras.data.network.api.CamerasApi
 import com.rickmasters.component.cameras.data.network.model.toRealm
 import com.rickmasters.component.cameras.domain.Camera
 import com.rickmasters.component.cameras.domain.CamerasRepository
 import io.realm.kotlin.Realm
 import io.realm.kotlin.ext.query
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
-import org.mongodb.kbson.ObjectId
 
 internal class CamerasRepositoryImpl(
     private val camerasApi: CamerasApi,
@@ -45,6 +45,8 @@ internal class CamerasRepositoryImpl(
         }
         if (result is Result.Success) {
             realm.write {
+                val cache = query<CameraObject>().find()
+                delete(cache)
                 result.data.map { copyToRealm(it) }
             }
         }

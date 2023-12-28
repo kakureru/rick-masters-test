@@ -1,9 +1,8 @@
-package com.rickmasters.component.cameras.data
+package com.rickmasters.component.cameras.data.db
 
 import com.rickmasters.component.cameras.domain.Camera
 import io.realm.kotlin.types.RealmObject
 import io.realm.kotlin.types.annotations.PrimaryKey
-import org.mongodb.kbson.ObjectId
 
 internal class CameraObject : RealmObject {
     @PrimaryKey

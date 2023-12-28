@@ -1,4 +1,4 @@
-package com.rickmasters.component.doors.data
+package com.rickmasters.component.doors.data.db
 
 import com.rickmasters.component.doors.domain.Door
 import io.realm.kotlin.types.RealmObject

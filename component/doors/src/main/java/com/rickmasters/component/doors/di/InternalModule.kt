@@ -1,6 +1,6 @@
 package com.rickmasters.component.doors.di
 
-import com.rickmasters.component.doors.data.DoorObject
+import com.rickmasters.component.doors.data.db.DoorObject
 import io.realm.kotlin.Realm
 import io.realm.kotlin.RealmConfiguration
 import org.koin.dsl.module
