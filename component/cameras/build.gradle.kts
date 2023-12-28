@@ -4,6 +4,7 @@ plugins {
     `android-library`
     `kotlin-android`
     kotlin("plugin.serialization")
+    id("io.realm.kotlin")
 }
 
 apply<ModuleGradlePlugin>()
@@ -20,4 +21,5 @@ dependencies {
     implementation(Dependencies.Koin.android)
     implementation(Dependencies.kotlinxSerialization)
     ktor()
+    implementation(Dependencies.realm)
 }

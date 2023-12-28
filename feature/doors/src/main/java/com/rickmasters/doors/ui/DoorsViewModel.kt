@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.launch
 
 internal class DoorsViewModel(
     private val doorsRepository: DoorsRepository,
@@ -63,11 +64,18 @@ internal class DoorsViewModel(
             .launchIn(viewModelScope)
     }
 
-    fun onFavouriteClick(doorId: String) {
-
+    fun onFavouriteClick(doorId: String) = viewModelScope.launch {
+        doorsRepository.toggleFavourite(doorId)
     }
 
-    fun onLockClick(doorId: String) {
+    fun onLockClick(doorId: String) = viewModelScope.launch {
+        doorsRepository.toggleFavourite(doorId)
+    }
 
+    fun onRefresh() = viewModelScope.launch {
+        val stateSnapshot = _uiState.value as? DoorsScreenState.Content ?: return@launch
+        _uiState.value = stateSnapshot.copy(refreshing = true)
+        doorsRepository.refreshDoors()
+        _uiState.value = stateSnapshot.copy(refreshing = false)
     }
 }

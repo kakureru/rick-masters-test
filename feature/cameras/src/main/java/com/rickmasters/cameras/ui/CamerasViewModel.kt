@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.launch
 
 internal class CamerasViewModel(
     private val camerasRepository: CamerasRepository,
@@ -64,7 +65,14 @@ internal class CamerasViewModel(
             .launchIn(viewModelScope)
     }
 
-    fun onFavouriteClick(camId: String) {
+    fun onFavouriteClick(camId: String) = viewModelScope.launch {
+        camerasRepository.toggleFavourite(camId)
+    }
 
+    fun onRefresh() = viewModelScope.launch {
+        val stateSnapshot = _uiState.value as? CamerasScreenState.Content ?: return@launch
+        _uiState.value = stateSnapshot.copy(refreshing = true)
+        camerasRepository.refreshCameras()
+        _uiState.value = stateSnapshot.copy(refreshing = false)
     }
 }

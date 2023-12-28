@@ -10,7 +10,8 @@ val componentCamerasModule = module {
 
     single<CamerasRepository> {
         CamerasRepositoryImpl(
-            camerasApi = get()
+            camerasApi = get(),
+            realm = CamerasComponentContext.koin.get()
         )
     }
 

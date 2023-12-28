@@ -12,6 +12,10 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -54,15 +58,18 @@ internal fun CamerasScreen(
         state = state,
         effect = viewModel.uiEffect,
         modifier = modifier,
+        onRefresh = viewModel::onRefresh,
         onFavouriteClick = viewModel::onFavouriteClick
     )
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 internal fun CamerasScreenLayout(
     state: CamerasScreenState,
     effect: Flow<CamerasEffect>,
     onFavouriteClick: (camId: String) -> Unit,
+    onRefresh: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
@@ -80,21 +87,27 @@ internal fun CamerasScreenLayout(
         CamerasScreenState.Loading -> FullscreenLoader()
 
         is CamerasScreenState.Content -> {
-            LazyColumn(
-                modifier = modifier,
-                verticalArrangement = Arrangement.spacedBy(12.dp),
-                contentPadding = PaddingValues(horizontal = 20.dp, vertical = 16.dp)
-            ) {
-                items(items = state.items, key = { item -> item.id }) {
-                    when (it) {
-                        is ListElement.Header -> Header(text = it.text.asString())
+            val pullRefreshState = rememberPullRefreshState(state.refreshing, onRefresh)
 
-                        is ListElement.Camera -> CameraItem(
-                            model = it,
-                            onFavouriteClick = { onFavouriteClick(it.id) }
-                        )
+            Box(
+                modifier = modifier.fillMaxSize().pullRefresh(pullRefreshState)
+            ) {
+                LazyColumn(
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                    contentPadding = PaddingValues(horizontal = 20.dp, vertical = 16.dp)
+                ) {
+                    items(items = state.items, key = { item -> item.id }) {
+                        when (it) {
+                            is ListElement.Header -> Header(text = it.text.asString())
+
+                            is ListElement.Camera -> CameraItem(
+                                model = it,
+                                onFavouriteClick = { onFavouriteClick(it.id) }
+                            )
+                        }
                     }
                 }
+                PullRefreshIndicator(state.refreshing, pullRefreshState, Modifier.align(Alignment.TopCenter))
             }
         }
     }

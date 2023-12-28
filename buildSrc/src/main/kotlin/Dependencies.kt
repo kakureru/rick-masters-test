@@ -10,12 +10,15 @@ object Dependencies {
 
     const val coil = "io.coil-kt:coil-compose:2.5.0"
 
+    const val realm = "io.realm.kotlin:library-base:1.7.1"
+
     object Compose {
         const val bom = "androidx.compose:compose-bom:2023.10.01"
         const val runtime = "androidx.compose.runtime:runtime"
         const val foundation = "androidx.compose.foundation:foundation:1.6.0-alpha04"
         const val foundationLayout = "androidx.compose.foundation:foundation-layout"
         const val material3 = "androidx.compose.material3:material3:1.2.0-alpha08"
+        const val material = "androidx.compose.material:material:1.5.4"
         const val ui = "androidx.compose.ui:ui"
         const val uiGraphics = "androidx.compose.ui:ui-graphics"
         const val uiTooling = "androidx.compose.ui:ui-tooling"
@@ -63,6 +66,7 @@ fun DependencyHandler.compose() {
     implementation(Dependencies.Compose.ui)
     implementation(Dependencies.Compose.uiGraphics)
     implementation(Dependencies.Compose.material3)
+    implementation(Dependencies.Compose.material)
     implementation(Dependencies.Compose.uiToolingPreview)
     debugImplementation(Dependencies.Compose.uiTooling)
     debugImplementation(Dependencies.Compose.uiTestManifest)

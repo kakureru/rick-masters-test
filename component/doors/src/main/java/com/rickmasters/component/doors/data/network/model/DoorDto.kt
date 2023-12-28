@@ -1,6 +1,6 @@
 package com.rickmasters.component.doors.data.network.model
 
-import com.rickmasters.component.doors.domain.Door
+import com.rickmasters.component.doors.data.DoorObject
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -12,12 +12,12 @@ internal class DoorDto(
     val room: String? = null,
 )
 
-internal fun DoorDto.toDomain(): Door? {
-    return Door(
-        id = id?.toString() ?: return null,
-        name = name ?: return null,
-        snapshotUrl = snapshot,
-        favourite = favorites ?: return null,
-        room = room,
-    )
+internal fun DoorDto.toRealm(): DoorObject? {
+    return DoorObject().apply {
+        id = this@toRealm.id?.toString() ?: return null
+        name = this@toRealm.name ?: return null
+        snapshotUrl = this@toRealm.snapshot
+        favorites = this@toRealm.favorites ?: return null
+        room = this@toRealm.room
+    }
 }

@@ -9,7 +9,8 @@ import org.koin.dsl.module
 val componentDoorsModule = module {
     single<DoorsRepository> {
         DoorsRepositoryImpl(
-            doorsApi = get()
+            doorsApi = get(),
+            realm = DoorsComponentContext.koin.get()
         )
     }
 

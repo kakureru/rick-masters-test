@@ -5,5 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface DoorsRepository {
     fun getDoors(): Flow<Result<List<Door>>>
-    fun refreshDoors(): Flow<Result<Unit>>
+    suspend fun refreshDoors()
+    suspend fun toggleFavourite(doorId: String)
+    suspend fun toggleLock(doorId: String)
 }
