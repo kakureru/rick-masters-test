@@ -1,4 +1,4 @@
-package com.rickmasters.doors.ui.ui
+package com.rickmasters.doors.ui.doors.ui
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
@@ -26,16 +26,17 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.rickmasters.common.ui.FullscreenLoader
 import com.rickmasters.common.ui.PlayOverlay
-import com.rickmasters.doors.ui.DoorsViewModel
-import com.rickmasters.doors.ui.model.DoorsEffect
-import com.rickmasters.doors.ui.model.DoorsScreenState
-import com.rickmasters.doors.ui.model.ListElement
+import com.rickmasters.doors.ui.doors.DoorsViewModel
+import com.rickmasters.doors.ui.doors.model.DoorsEffect
+import com.rickmasters.doors.ui.doors.model.DoorsScreenState
+import com.rickmasters.doors.ui.doors.model.ListElement
 import kotlinx.coroutines.flow.Flow
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 internal fun DoorsScreen(
     modifier: Modifier = Modifier,
+    onEditClick: (doorId: String) -> Unit,
     viewModel: DoorsViewModel = koinViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
@@ -46,6 +47,7 @@ internal fun DoorsScreen(
         onFavouriteClick = viewModel::onFavouriteClick,
         onLockClick = viewModel::onLockClick,
         onRefresh = viewModel::onRefresh,
+        onEditClick = onEditClick,
         modifier = modifier,
     )
 }
@@ -57,6 +59,7 @@ internal fun DoorsScreenLayout(
     effect: Flow<DoorsEffect>,
     onFavouriteClick: (doorId: String) -> Unit,
     onRefresh: () -> Unit,
+    onEditClick: (doorId: String) -> Unit,
     onLockClick: (doorId: String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -91,7 +94,7 @@ internal fun DoorsScreenLayout(
                             is ListElement.Door -> DoorItem(
                                 model = it,
                                 onLockClick = { onLockClick(it.id) },
-                                onEditClick = { },
+                                onEditClick = { onEditClick(it.id) },
                                 onFavouriteClick = { onFavouriteClick(it.id) }
                             )
                         }

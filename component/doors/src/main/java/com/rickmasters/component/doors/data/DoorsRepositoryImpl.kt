@@ -29,6 +29,14 @@ internal class DoorsRepositoryImpl(
         }
     }
 
+    override suspend fun getDoor(doorId: String): Result<Door> {
+        val result = realm.query<DoorObject>("id == $0", doorId).first().find()?.toDomain()
+        return if (result != null)
+            Result.Success(result)
+        else
+            Result.Error(null)
+    }
+
     override suspend fun refreshDoors() {
         val result = runRequestCatchingNonCancellation {
             doorsApi.getDoors().data.mapNotNull { it.toRealm() }
@@ -54,6 +62,15 @@ internal class DoorsRepositoryImpl(
             val queriedDoor = query<DoorObject>("id == $0", doorId).first().find()
             queriedDoor?.apply {
                 locked = !locked
+            }
+        }
+    }
+
+    override suspend fun updateName(doorId: String, newName: String) {
+        realm.write {
+            val queriedDoor = query<DoorObject>("id == $0", doorId).first().find()
+            queriedDoor?.apply {
+                name = newName
             }
         }
     }

@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="other">Прочее</string>
+    <string name="error_name_required">Введите название</string>
+    <string name="room_name">Название комнаты</string>
+    <string name="error_door_not_found">Дверь не найдена</string>
 </resources>

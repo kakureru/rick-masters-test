@@ -1,4 +1,4 @@
-package com.rickmasters.doors.ui.ui
+package com.rickmasters.doors.ui.doors.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -24,7 +24,7 @@ import com.rickmasters.common.ui.R
 import com.rickmasters.common.ui.SwipeDirection
 import com.rickmasters.common.ui.SwipeToReveal
 import com.rickmasters.common.ui.theme.Yellow
-import com.rickmasters.doors.ui.model.ListElement
+import com.rickmasters.doors.ui.doors.model.ListElement
 
 @Composable
 internal fun DoorItem(

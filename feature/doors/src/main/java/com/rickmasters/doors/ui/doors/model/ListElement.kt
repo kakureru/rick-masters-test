@@ -1,4 +1,4 @@
-package com.rickmasters.doors.ui.model
+package com.rickmasters.doors.ui.doors.model
 
 import com.rickmasters.common.ui.UiText
 import com.rickmasters.common.ui.asUiText

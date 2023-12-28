@@ -1,4 +1,4 @@
-package com.rickmasters.doors.ui
+package com.rickmasters.doors.ui.doors
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,9 +8,9 @@ import com.rickmasters.common.ui.asUiText
 import com.rickmasters.common.utils.NoConnection
 import com.rickmasters.common.utils.Result
 import com.rickmasters.component.doors.domain.DoorsRepository
-import com.rickmasters.doors.ui.model.DoorsEffect
-import com.rickmasters.doors.ui.model.DoorsScreenState
-import com.rickmasters.doors.ui.model.toUi
+import com.rickmasters.doors.ui.doors.model.DoorsEffect
+import com.rickmasters.doors.ui.doors.model.DoorsScreenState
+import com.rickmasters.doors.ui.doors.model.toUi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -49,7 +49,8 @@ internal class DoorsViewModel(
                         _uiState.value = DoorsScreenState.Content(items = result.data.toUi())
                     }
                     is Result.Error -> {
-                        _uiEffect.emit(DoorsEffect.Error(
+                        _uiEffect.emit(
+                            DoorsEffect.Error(
                             result.message?.asUiText() ?: UiText.ResString(R.string.error_unknown)
                         ))
                     }
@@ -62,6 +63,10 @@ internal class DoorsViewModel(
             }
             .flowOn(Dispatchers.IO)
             .launchIn(viewModelScope)
+    }
+
+    fun updateName(doorId: String, newName: String) = viewModelScope.launch {
+        doorsRepository.updateName(doorId, newName)
     }
 
     fun onFavouriteClick(doorId: String) = viewModelScope.launch {
